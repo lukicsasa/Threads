@@ -25,7 +25,7 @@ public class Song {
         if (voice == Voice.ALL) {
             return allLyrics();
         }
-        if ((voice == Voice.LEAD) || (voice == Voice.BACKING)) {
+        if ((voice == Voice.LEAD) || (voice == Voice.BACKING) || voice == Voice.ANOTHER_BACKING) {
             return lyrics.get(linePointer);
         }
         return null;

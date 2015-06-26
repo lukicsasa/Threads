@@ -8,5 +8,6 @@ public enum Voice {
     
     ALL,
     LEAD,
-    BACKING
+    BACKING,
+    ANOTHER_BACKING
 }

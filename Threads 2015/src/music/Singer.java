@@ -84,15 +84,31 @@ public class Singer extends Thread {
         String line = null;
         
         while (!stopIt) {
+      
+   
             if (this.voice == Voice.LEAD) {
-                line = song.pickLine(this.voice, (i % song.getLyrics().size()));
+                line = song.pickLine(this.voice,(i % song.getLyrics().size()));
                 synch.singLeadLine(line, delay);
-            } else {
-                line = '\t' + song.pickLine(this.voice, (i % song.getLyrics().size() + 1));
-                synch.singBackingLine(line, delay);
+
             }
+ 
+            if (this.voice == Voice.BACKING) {
+            	line = '\t' + song.pickLine(this.voice, (i % song.getLyrics().size() +1 ) );
+            	synch.singBackingLine(line, delay);
+ 
+            }
+
+            if (this.voice == Voice.ANOTHER_BACKING) {
+            	line = '\t'+ "        " + song.pickLine(this.voice,(i % song.getLyrics().size() + 1) );
+            	synch.singAnotherLeadLine(line, delay);
+
+            }
+            
             i += 2;
+            
         }
+        
+      
     }
     
     public String getSingerName() {
@@ -134,5 +150,11 @@ public class Singer extends Thread {
     public void setSynch(Synchronizer synch) {
         this.synch = synch;
     }
+    
+    public void paragraphOver(Song song , int i) {
+    	if ( i == song.getLyrics().size()-1)
+    		i = -1;
+    }
 
+   
 }

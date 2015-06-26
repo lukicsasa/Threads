@@ -23,6 +23,7 @@ public class Test {
     private Performance performance;
     private Singer bbk;
     private Singer bono;
+    private Singer kurt;
     
     public Test() {
         // TODO Auto-generated constructor stub
@@ -33,11 +34,12 @@ public class Test {
         lyrics.add("When love comes to town I'm gonna jump that train");
         lyrics.add("When love comes to town I'm gonna catch that flame.");
         lyrics.add("Maybe I was wrong to ever let you down");
-        lyrics.add("But I did what I did before love came to town.");
+        lyrics.add("But I did what I did before love came to town."); 
+  
         
         song = new Song("When Love Comes to Town", lyrics);
-        performance = new Performance(song, 1000);
-        Synchronizer synch = new Synchronizer(true);
+        performance = new Performance(song, 1400);
+        Synchronizer synch = new Synchronizer(true,false);
         boolean stopIt = false;
         
 //        bbk = new Singer("B.B. King", Voice.LEAD, performance);
@@ -45,6 +47,7 @@ public class Test {
         
         bbk = new Singer("B.B. King", Voice.LEAD, performance, stopIt, synch);
         bono = new Singer("Bono", Voice.BACKING, performance, stopIt, synch);
+        kurt = new Singer("Kurt Cobain", Voice.ANOTHER_BACKING, performance, stopIt, synch);
     }
     
     public synchronized void simpleWait() {
@@ -105,10 +108,12 @@ public class Test {
         initialize();
         bbk.start();
         bono.start();
+        kurt.start();
         
         IN.nextLine();
         bbk.setStopIt(true);
         bono.setStopIt(true);
+        kurt.setStopIt(true);
     }
 
 }
