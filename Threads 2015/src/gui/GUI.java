@@ -22,6 +22,7 @@ public class GUI extends JFrame {
 	private JButton btnStart;
 	private JButton btnStop;
 	public Test test;
+	private JButton btnClear;
 
 	/**
 	 * Launch the application.
@@ -46,7 +47,7 @@ public class GUI extends JFrame {
 		setResizable(false);
 		setTitle("Singing awesomness");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 573, 341);
+		setBounds(100, 100, 608, 372);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,13 +55,14 @@ public class GUI extends JFrame {
 		contentPane.add(getScrollPane());
 		contentPane.add(getBtnStart());
 		contentPane.add(getBtnStop());
+		contentPane.add(getBtnClear());
 		
 		test = new Test();
 	}
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
-			scrollPane.setBounds(24, 28, 360, 254);
+			scrollPane.setBounds(10, 28, 437, 293);
 			scrollPane.setViewportView(getTextArea());
 		}
 		return scrollPane;
@@ -79,7 +81,7 @@ public class GUI extends JFrame {
 					test.testSingWithThreads();
 				}
 			});
-			btnStart.setBounds(422, 30, 107, 37);
+			btnStart.setBounds(457, 37, 107, 37);
 		}
 		return btnStart;
 	}
@@ -91,8 +93,20 @@ public class GUI extends JFrame {
 					test.stop();
 				}
 			});
-			btnStop.setBounds(422, 85, 107, 37);
+			btnStop.setBounds(457, 85, 107, 37);
 		}
 		return btnStop;
+	}
+	private JButton getBtnClear() {
+		if (btnClear == null) {
+			btnClear = new JButton("Clear");
+			btnClear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					textArea.setText("");
+				}
+			});
+			btnClear.setBounds(454, 298, 71, 23);
+		}
+		return btnClear;
 	}
 }
