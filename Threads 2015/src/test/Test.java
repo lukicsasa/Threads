@@ -110,7 +110,10 @@ public class Test {
         bono.start();
         kurt.start();
         
-        IN.nextLine();
+    }
+
+    
+    public void stop () {
         bbk.setStopIt(true);
         bono.setStopIt(true);
         kurt.setStopIt(true);

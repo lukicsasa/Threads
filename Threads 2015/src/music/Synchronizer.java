@@ -4,6 +4,8 @@
  */
 package music;
 
+import javax.swing.JTextArea;
+
 public class Synchronizer {
     
     private boolean leadLineFlag;
@@ -18,7 +20,7 @@ public class Synchronizer {
         this.anotherFlag = anotherFlag;
     }
 
-    public synchronized void singLeadLine(String leadLine, long delay) {
+    public synchronized void singLeadLine(String leadLine, long delay , JTextArea area) {
         while (!leadLineFlag) {
             try {
                 wait();
@@ -27,10 +29,10 @@ public class Synchronizer {
                 e.printStackTrace();
             }
         }
-        singOneLineLead(leadLine, delay);
+        singOneLineLead(leadLine, delay, area);
     }
 
-    public synchronized void singBackingLine(String backingLine, long delay) {
+    public synchronized void singBackingLine(String backingLine, long delay, JTextArea area) {
         while (!anotherFlag) {
             try {
                 wait();
@@ -39,10 +41,10 @@ public class Synchronizer {
                 e.printStackTrace();
             }
         }
-        singOneLineBack(backingLine, delay);
+        singOneLineBack(backingLine, delay, area);
     }
     
-    public synchronized void singAnotherLeadLine(String anotherLeadingLine, long delay) {
+    public synchronized void singAnotherLeadLine(String anotherLeadingLine, long delay, JTextArea area) {
     	while (leadLineFlag || anotherFlag) {
     		try {
 				wait();
@@ -51,43 +53,43 @@ public class Synchronizer {
 				e.printStackTrace();
 			}
     	}
-    	singOneLineAnother(anotherLeadingLine, delay);
+    	singOneLineAnother(anotherLeadingLine, delay, area);
     }
     
-    private void singOneLineLead(String line, long delay) {
+    private void singOneLineLead(String line, long delay, JTextArea area) {
         try {
             wait(delay);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(line);
+        area.append(line +'\n');
         leadLineFlag = false;
         anotherFlag = true;
         notifyAll();
     }
     
-    private void singOneLineBack(String line, long delay) {
+    private void singOneLineBack(String line, long delay, JTextArea area) {
         try {
             wait(delay);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(line);
+        area.append(line +'\n');
         leadLineFlag = false;
         anotherFlag = false;
         notifyAll();
     }
     
-    private void singOneLineAnother(String line, long delay) {
+    private void singOneLineAnother(String line, long delay, JTextArea area) {
         try {
             wait(delay);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println(line);
+        area.append(line +'\n');
         leadLineFlag = true;
         anotherFlag = false;
         notifyAll();

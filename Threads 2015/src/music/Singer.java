@@ -4,7 +4,11 @@
  */
 package music;
 
+import gui.GUI;
+
 import java.util.Timer;
+
+import javax.swing.JTextArea;
 
 import test.ShoutTimerTask;
 
@@ -72,10 +76,10 @@ public class Singer extends Thread {
     
     @Override
     public void run() {
-        sing();
+        sing(GUI.textArea);
     }
     
-    public synchronized void sing() {
+    public synchronized void sing(JTextArea area) {
         
         Song song = this.performance.getSong();
         long delay = this.performance.getDelay();
@@ -88,19 +92,19 @@ public class Singer extends Thread {
    
             if (this.voice == Voice.LEAD) {
                 line = song.pickLine(this.voice,(i % song.getLyrics().size()));
-                synch.singLeadLine(line, delay);
+                synch.singLeadLine(line, delay, area);
 
             }
  
             if (this.voice == Voice.BACKING) {
             	line = '\t' + song.pickLine(this.voice, (i % song.getLyrics().size() +1 ) );
-            	synch.singBackingLine(line, delay);
+            	synch.singBackingLine(line, delay , area);
  
             }
 
             if (this.voice == Voice.ANOTHER_BACKING) {
             	line = '\t'+ "        " + song.pickLine(this.voice,(i % song.getLyrics().size() + 1) );
-            	synch.singAnotherLeadLine(line, delay);
+            	synch.singAnotherLeadLine(line, delay, area);
 
             }
             
